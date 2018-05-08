@@ -1,0 +1,45 @@
+﻿@model CaptecTechCheck.Models.HomePageModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+<br />
+<div class="row">
+    <div class="col-lg-12">
+        @using (Html.BeginForm())
+        {
+            <div class="form-group">
+                <div class="col-lg-6">
+                    @Html.TextBoxFor(x => x.URL, new { @class = "form-control" })
+                </div>
+                <div class="col-lg-6">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-12">
+                    @Html.ValidationMessageFor(x => x.URL)
+                </div>
+            </div>}
+    </div>
+</div>
+
+<div class="tag-cloud">
+    @if (Model != null)
+    {
+        if (Model.cloudModel.Any())
+        {
+            foreach (var cloudMod in Model.cloudModel)
+            {
+                var c = string.Format("{0}px!important;", cloudMod.cloudWordCount * 3);
+
+                var random = new Random(cloudMod.cloudWordCount);
+                var colour = String.Format("#{0:X6};", random.Next(0x1000000));
+                <span style="font-size:@c color:@colour">@cloudMod.cloudWord </span>
+            }
+        }
+    }
+
+</div>
+
+
